@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.ir.backend.js.compile
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.8.21"
-    id("org.jetbrains.intellij") version "1.13.3"
+    id("org.jetbrains.intellij") version "1.17.2"
 }
 
 group = "de.cubbossa"
@@ -15,13 +15,19 @@ repositories {
 }
 
 dependencies {
+    implementation("net.kyori:adventure-api:4.16.0")
+    implementation("net.kyori:adventure-text-minimessage:4.16.0")
+    implementation("net.kyori:adventure-text-serializer-plain:4.16.0")
+    implementation("net.kyori:adventure-text-serializer-legacy:4.16.0")
+    implementation("net.kyori:adventure-text-serializer-gson:4.16.0")
+    implementation("de.cubbossa:TinyTranslations-common:4.4.3")
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }
 
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("2023.3.1")
+    version.set("2023.3.4")
     type.set("IC") // Target IDE Platform
 
     plugins.set(listOf("com.intellij.java", "org.intellij.intelliLang", "org.jetbrains.plugins.yaml", "com.intellij.properties"))
@@ -40,8 +46,8 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("222")
-        untilBuild.set("233.*")
+        sinceBuild.set("233")
+        untilBuild.set("241.*")
     }
 
     signPlugin {
