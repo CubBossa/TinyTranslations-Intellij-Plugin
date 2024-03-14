@@ -1,8 +1,7 @@
 <idea-plugin>
     <extensions defaultExtensionNs="com.intellij">
-        <languageInjectionContributor
-                language="Properties"
-                implementationClass="org.intellij.sdk.language.tinytranslations.PropertiesLanguageInjector"
+        <multiHostInjector
+                implementation="org.intellij.sdk.language.tinytranslations.PropertiesLanguageInjector"
         />
     </extensions>
 </idea-plugin>

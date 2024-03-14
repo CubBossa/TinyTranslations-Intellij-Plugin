@@ -2,8 +2,6 @@ package org.intellij.sdk.language.nanomessage.highlight;
 
 import com.intellij.codeInsight.hints.InlayInfo;
 import com.intellij.codeInsight.hints.InlayParameterHintsProvider;
-import com.intellij.codeInsight.hints.declarative.InlayOptionInfo;
-import com.intellij.codeInsight.hints.declarative.InlayProviderPassInfo;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
@@ -11,7 +9,10 @@ import org.intellij.sdk.language.nanomessage.psi.ChoiceWrapper;
 import org.intellij.sdk.language.nanomessage.psi.NanoMessagePsiUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class NanoMessageChoiceInlayHintProvider implements InlayParameterHintsProvider {
 

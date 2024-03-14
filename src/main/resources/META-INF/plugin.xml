@@ -19,7 +19,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-        Full compatibility and further improvements in suggestions and annotations.
+        Remove deprecated API usage
     ]]></change-notes>
 
     <!-- Product and plugin compatibility requirements.
@@ -33,8 +33,8 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="org.intellij.intelliLang">
-<!--        <languageSupport implementation="org.intellij.plugins.intelliLang.inject.java.JavaLanguageInjectionSupport"/>-->
-        <injectionConfig config="resources/java_injections.xml"/>
+        <!--        <languageSupport implementation="org.intellij.plugins.intelliLang.inject.java.JavaLanguageInjectionSupport"/>-->
+        <injectionConfig config="java_injections.xml"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -51,7 +51,7 @@
         <lang.ast.factory language="MiniMessage"
                           implementationClass="org.intellij.sdk.language.minimessage.psi.MiniMessageASTFactory"
                           order="first"/>
-        <typedHandler implementation="org.intellij.sdk.language.minimessage.editor.MiniMessageTypedHandler"/>
+<!--        <typedHandler implementation="org.intellij.sdk.language.minimessage.editor.MiniMessageTypedHandler"/>-->
         <lang.formatter
                 language="MiniMessage"
                 implementationClass="org.intellij.sdk.language.minimessage.editor.MiniMessageFormattingModelBuilder"
@@ -61,7 +61,8 @@
                 implementationClass="org.intellij.sdk.language.minimessage.parser.MiniMessageParserDefinition"
         />
         <xml.xmlTypedHandlersAdditionalSupport
-                implementation="org.intellij.sdk.language.minimessage.editor.MiniMessageHandlersAdditionalSupport"/>
+                implementation="org.intellij.sdk.language.minimessage.editor.MiniMessageHandlersAdditionalSupport"
+        />
         <colorProvider
                 id="MiniMessage"
                 implementation="org.intellij.sdk.language.minimessage.editor.MiniMessageElementColorProvider"
@@ -115,22 +116,20 @@
                 implementationClass="org.intellij.sdk.language.nanomessage.highlight.NanoMessageChoiceInlayHintProvider"
         />
         <multiHostInjector
-            implementation="org.intellij.sdk.language.nanomessage.injection.LegacyInjector"
+                implementation="org.intellij.sdk.language.nanomessage.injection.LegacyInjector"
         />
         <completion.contributor
                 language="NanoMessage"
                 implementationClass="org.intellij.sdk.language.nanomessage.editor.NanoMessageCompletionContributor"
         />
         <additionalTextAttributes
-            scheme="Default"
-            file="colorSchemes/NanoMessageDefaults.xml"
+                scheme="Default"
+                file="colorSchemes/NanoMessageDefaults.xml"
         />
         <additionalTextAttributes
                 scheme="Darcula"
                 file="colorSchemes/NanoMessageDefaults.xml"
         />
-
-
         <fileType
                 name="MinecraftAmpersandFormatting"
                 implementationClass="org.intellij.sdk.language.legacy.ampersand.AmpersandFileType"
@@ -150,8 +149,6 @@
                 language="MinecraftAmpersandFormatting"
                 implementationClass="org.intellij.sdk.language.legacy.common.editor.LegacyCompletionContributor"
         />
-
-
         <fileType
                 name="MinecraftLegacyFormatting"
                 implementationClass="org.intellij.sdk.language.legacy.common.LegacyFileType"
@@ -171,7 +168,6 @@
                 language="MinecraftLegacyFormatting"
                 implementationClass="org.intellij.sdk.language.legacy.common.editor.LegacyCompletionContributor"
         />
-
         <colorProvider
                 implementation="org.intellij.sdk.language.legacy.common.editor.LegacyElementColorProvider"
         />

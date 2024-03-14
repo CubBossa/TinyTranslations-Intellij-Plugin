@@ -26,6 +26,11 @@ public class MiniMessageXmlExtension extends HtmlXmlExtension {
     }
 
     @Override
+    public boolean useXmlTagInsertHandler() {
+        return super.useXmlTagInsertHandler();
+    }
+
+    @Override
     public boolean isCustomTagAllowed(XmlTag tag) {
         return true;
     }
@@ -33,11 +38,6 @@ public class MiniMessageXmlExtension extends HtmlXmlExtension {
     @Override
     public boolean shouldBeHighlightedAsTag(XmlTag tag) {
         return false;
-    }
-
-    @Override
-    public boolean shouldCompleteTag(XmlTag context) {
-        return true;
     }
 
     @Override
