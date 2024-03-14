@@ -175,5 +175,9 @@
         <colorProvider
                 implementation="org.intellij.sdk.language.legacy.common.editor.LegacyElementColorProvider"
         />
+<!--        <lang.documentationProvider-->
+<!--                language="MiniMessage"-->
+<!--                implementationClass="org.intellij.sdk.language.minimessage.editor.MiniMessageTagPreviewProvider"-->
+<!--        />-->
     </extensions>
 </idea-plugin>
