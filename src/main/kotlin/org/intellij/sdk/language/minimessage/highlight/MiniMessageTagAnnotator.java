@@ -1,5 +1,6 @@
 package org.intellij.sdk.language.minimessage.highlight;
 
+import com.intellij.codeInsight.editorActions.XmlGtTypedHandler;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;

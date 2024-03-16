@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class MiniMessageTagDelegate extends XmlTagDelegate {
 
-    public MiniMessageTagDelegate(@NotNull MiniMessageTagImpl tag) {
+    public MiniMessageTagDelegate(@NotNull MiniMessageTag tag) {
         super(tag);
     }
 

@@ -48,10 +48,12 @@
                 language="MiniMessage"
                 extensions="mm"
         />
-        <lang.ast.factory language="MiniMessage"
-                          implementationClass="org.intellij.sdk.language.minimessage.psi.MiniMessageASTFactory"
-                          order="first"/>
-<!--        <typedHandler implementation="org.intellij.sdk.language.minimessage.editor.MiniMessageTypedHandler"/>-->
+        <lang.ast.factory
+                language="MiniMessage"
+                implementationClass="org.intellij.sdk.language.minimessage.psi.MiniMessageASTFactory"
+                order="first"
+        />
+        <!--        <typedHandler implementation="org.intellij.sdk.language.minimessage.editor.MiniMessageTypedHandler"/>-->
         <lang.formatter
                 language="MiniMessage"
                 implementationClass="org.intellij.sdk.language.minimessage.editor.MiniMessageFormattingModelBuilder"
@@ -171,9 +173,9 @@
         <colorProvider
                 implementation="org.intellij.sdk.language.legacy.common.editor.LegacyElementColorProvider"
         />
-<!--        <lang.documentationProvider-->
-<!--                language="MiniMessage"-->
-<!--                implementationClass="org.intellij.sdk.language.minimessage.editor.MiniMessageTagPreviewProvider"-->
-<!--        />-->
+        <!--        <lang.documentationProvider-->
+        <!--                language="MiniMessage"-->
+        <!--                implementationClass="org.intellij.sdk.language.minimessage.editor.MiniMessageTagPreviewProvider"-->
+        <!--        />-->
     </extensions>
 </idea-plugin>

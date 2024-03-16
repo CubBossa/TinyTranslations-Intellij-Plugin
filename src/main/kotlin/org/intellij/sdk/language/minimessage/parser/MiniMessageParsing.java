@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.intellij.psi.xml.XmlElementType.*;
+import static org.intellij.sdk.language.minimessage.MiniMessageTokenType.*;
 
 public class MiniMessageParsing {
     private static final int BALANCING_DEPTH_THRESHOLD = 1000;
@@ -42,13 +43,9 @@ public class MiniMessageParsing {
     }
 
     public void parseDocument() {
-        final PsiBuilder.Marker document = mark();
-
         while (!eof()) {
             parseTagContent(null);
         }
-
-        document.done(XML_DOCUMENT);
     }
 
     protected void parseTag() {
@@ -71,7 +68,7 @@ public class MiniMessageParsing {
                     footer.rollbackTo();
                     myTagNamesStack.pop();
                     content.drop();
-                    tag.done(XML_TAG);
+                    tag.done(MM_TAG);
                     return;
                 }
 
@@ -97,7 +94,7 @@ public class MiniMessageParsing {
 
         content.drop();
         myTagNamesStack.pop();
-        tag.done(XML_TAG);
+        tag.done(MM_TAG);
     }
 
     private @Nullable String parseTagHeader(final PsiBuilder.Marker tag) {
@@ -117,7 +114,7 @@ public class MiniMessageParsing {
 
         do {
             final IElementType tt = token();
-            if (tt == MiniMessageTokenType.MM_ATTRIBUTE_SEPARATOR) {
+            if (tt == MM_ATTRIBUTE_SEPARATOR) {
                 parseAttribute();
             }
             else {
@@ -129,7 +126,7 @@ public class MiniMessageParsing {
         if (token() == XML_EMPTY_ELEMENT_END) {
             advance();
             myTagNamesStack.pop();
-            tag.done(XML_TAG);
+            tag.done(MM_TAG);
             return null;
         }
 
@@ -139,13 +136,13 @@ public class MiniMessageParsing {
         else {
             error(XmlPsiBundle.message("xml.parsing.tag.start.is.not.closed"));
             myTagNamesStack.pop();
-            tag.done(XML_TAG);
+            tag.done(MM_TAG);
             return null;
         }
 
         if (myTagNamesStack.size() > BALANCING_DEPTH_THRESHOLD) {
             error(XmlPsiBundle.message("xml.parsing.way.too.unbalanced"));
-            tag.done(XML_TAG);
+            tag.done(MM_TAG);
             return null;
         }
 
@@ -268,7 +265,7 @@ public class MiniMessageParsing {
     }
 
     private static final Collection<IElementType> ATTRIBUTE_DELIMITERS = List.of(
-            MiniMessageTokenType.MM_ATTRIBUTE_SEPARATOR, XML_ATTRIBUTE_VALUE_END_DELIMITER, XML_TAG_END,
+            MM_ATTRIBUTE_SEPARATOR, XML_ATTRIBUTE_VALUE_END_DELIMITER, XML_TAG_END,
             XML_END_TAG_START, XML_EMPTY_ELEMENT_END, XML_START_TAG_START
     );
 

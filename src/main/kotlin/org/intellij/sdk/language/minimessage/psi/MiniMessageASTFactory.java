@@ -1,22 +1,29 @@
 package org.intellij.sdk.language.minimessage.psi;
 
 import com.intellij.lang.ASTFactory;
-import com.intellij.lang.xml.XmlASTFactory;
 import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.impl.source.tree.LazyParseableElement;
 import com.intellij.psi.impl.source.tree.LeafElement;
 import com.intellij.psi.impl.source.tree.XmlFileElement;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.ILazyParseableElementType;
+import org.intellij.sdk.language.minimessage.parser.MiniMessageParserDefinition;
+import org.intellij.sdk.language.nanomessage.parser.NanoMessageParserDefinition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.intellij.psi.xml.XmlElementType.*;
+import static org.intellij.sdk.language.minimessage.MiniMessageTokenType.*;
 
-public class MiniMessageASTFactory extends XmlASTFactory {
+public class MiniMessageASTFactory extends ASTFactory {
 
     @Override
     public @Nullable LazyParseableElement createLazy(@NotNull ILazyParseableElementType type, CharSequence text) {
+        if (type == MiniMessageParserDefinition.FILE) {
+            return new XmlFileElement(type, text);
+        }
+        if (type == NanoMessageParserDefinition.FILE) {
+            return new XmlFileElement(type, text);
+        }
         return super.createLazy(type, text);
     }
 
@@ -27,7 +34,7 @@ public class MiniMessageASTFactory extends XmlASTFactory {
 
     @Override
     public CompositeElement createComposite(@NotNull IElementType type) {
-        if (type == XML_TAG) {
+        if (type == MM_TAG) {
             return new MiniMessageTagImpl();
         }
         return super.createComposite(type);

@@ -5,12 +5,14 @@ import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.psi.impl.source.xml.XmlTagDelegate;
 import com.intellij.psi.impl.source.xml.XmlTagImpl;
 import com.intellij.psi.xml.XmlTag;
+import org.intellij.sdk.language.minimessage.MiniMessageTokenType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MiniMessageTagImpl extends XmlTagImpl implements XmlTag  {
+public class MiniMessageTagImpl extends XmlTagImpl implements MiniMessageTag {
 
     public MiniMessageTagImpl() {
+        super(MiniMessageTokenType.MM_TAG);
     }
 
     @Override
