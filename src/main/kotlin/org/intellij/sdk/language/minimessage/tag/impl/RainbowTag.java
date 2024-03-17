@@ -13,6 +13,6 @@ public class RainbowTag extends MiniMessageTag {
             public boolean check(String arg) {
                 return arg.matches("!?[0-9]*");
             }
-        });
+        }).optional();
     }
 }
