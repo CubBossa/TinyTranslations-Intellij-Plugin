@@ -22,7 +22,7 @@ public class MiniMessageBlock extends AbstractBlock {
         ASTNode child = myNode.getFirstChildNode();
         while (child != null) {
             if (child.getElementType() != TokenType.WHITE_SPACE) {
-                Block block = new MiniMessageBlock(child, Wrap.createWrap(WrapType.NONE, false), Alignment.createAlignment());
+                Block block = new MiniMessageBlock(child, myWrap, myAlignment);
                 blocks.add(block);
             }
             child = child.getTreeNext();
