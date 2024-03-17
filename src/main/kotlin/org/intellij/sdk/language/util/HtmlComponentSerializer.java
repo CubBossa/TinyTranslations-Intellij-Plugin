@@ -43,13 +43,15 @@ public class HtmlComponentSerializer implements ComponentSerializer<Component, C
                     case UNDERLINED -> { decoration.add("underline"); yield ""; }
                     case ITALIC -> "font-style: " + (set ? "italic" : "normal");
                 };
-                sb.append(key).append("text-decoration: ").append(String.join(" ", decoration));
+                if (!decoration.isEmpty()) {
+                    sb.append(key).append(" text-decoration: ").append(String.join(" ", decoration));
+                }
             });
             sb.append("\"");
         }
         sb.append(">");
         if (c instanceof TextComponent tc) {
-            sb.append(tc.content().replace("\n", "<br>"));
+            sb.append(tc.content().replace("<", "&#60;").replace("\n", "<br>"));
         } else if (c instanceof TranslatableComponent tc) {
             String tr = Constants.TRANSLATION_KEY_VALUES.getProperty(tc.key());
             if (tr == null) {

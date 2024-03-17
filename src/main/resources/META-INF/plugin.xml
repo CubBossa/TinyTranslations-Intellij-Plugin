@@ -53,7 +53,6 @@
                 implementationClass="org.intellij.sdk.language.minimessage.psi.MiniMessageASTFactory"
                 order="first"
         />
-        <!--        <typedHandler implementation="org.intellij.sdk.language.minimessage.editor.MiniMessageTypedHandler"/>-->
         <lang.formatter
                 language="MiniMessage"
                 implementationClass="org.intellij.sdk.language.minimessage.editor.MiniMessageFormattingModelBuilder"
@@ -93,6 +92,11 @@
                 language="MiniMessage"
                 implementationClass="org.intellij.sdk.language.minimessage.editor.MiniMessageSpellCheckingStrategy"
         />
+        <intentionAction>
+            <language>MiniMessage</language>
+            <className>org.intellij.sdk.language.minimessage.editor.preview.MiniMessagePreviewIntentionAction</className>
+        </intentionAction>
+
 
         <fileType
                 name="NanoMessage"
@@ -177,5 +181,7 @@
         <!--                language="MiniMessage"-->
         <!--                implementationClass="org.intellij.sdk.language.minimessage.editor.MiniMessageTagPreviewProvider"-->
         <!--        />-->
+        <fileEditorProvider
+                implementation="org.intellij.sdk.language.minimessage.editor.preview.MiniMessageFileEditorProvider"/>
     </extensions>
 </idea-plugin>
