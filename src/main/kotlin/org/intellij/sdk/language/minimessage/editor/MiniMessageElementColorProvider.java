@@ -10,6 +10,7 @@ import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlTokenType;
 import org.intellij.sdk.language.Constants;
 import org.intellij.sdk.language.minimessage.psi.MiniMessagePsiFactory;
 import org.intellij.sdk.language.util.StringUtil;
@@ -34,7 +35,10 @@ public class MiniMessageElementColorProvider implements ElementColorProvider, Du
 		if (psiElement.getParent() instanceof XmlTag tag && tag.getChildren().length > 1 && tag.getChildren()[1].equals(psiElement)) {
 			return getColorFrom(tag.getName());
 		}
-		if (!(psiElement instanceof XmlAttributeValue value)) {
+		if (!(psiElement.getNode().getElementType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN)) {
+			return null;
+		}
+		if (!(psiElement.getParent() instanceof XmlAttributeValue value)) {
 			return null;
 		}
 		if (!(value.getParent() instanceof XmlAttribute attr)) {
@@ -64,7 +68,10 @@ public class MiniMessageElementColorProvider implements ElementColorProvider, Du
 			tag.setName(toString(color));
 			return;
 		}
-		if (!(psiElement instanceof XmlAttributeValue value)) {
+		if (!(psiElement.getNode().getElementType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN)) {
+			return;
+		}
+		if (!(psiElement.getParent() instanceof XmlAttributeValue value)) {
 			return;
 		}
 		if (!(value.getParent() instanceof XmlAttribute attr)) {

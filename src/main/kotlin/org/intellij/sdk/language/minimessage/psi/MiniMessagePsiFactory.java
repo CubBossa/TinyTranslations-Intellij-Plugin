@@ -23,7 +23,7 @@ public class MiniMessagePsiFactory {
     }
     public static XmlAttributeValue createAttributeValue(XmlTag tag, String value, String quote) {
         MiniMessageFile file = createFile(tag.getProject(), "<dummy:" + quote + value + quote + "/>");
-        XmlTag t = (XmlTag) file.getFirstChild().getFirstChild();
+        XmlTag t = (XmlTag) file.getFirstChild();
         return t.getAttributes()[0].getValueElement();
     }
 
@@ -44,6 +44,6 @@ public class MiniMessagePsiFactory {
 
     public static PsiElement createTagName(Project project, String name) {
         MiniMessageFile file = createFile(project, "<" + name + "/>");
-        return file.getFirstChild().getFirstChild().getChildren()[1];
+        return file.getFirstChild().getChildren()[1];
     }
 }
