@@ -12,6 +12,7 @@ version = "1.2.0"
 repositories {
     mavenCentral()
     maven("https://nexus.leonardbausenwein.de/repository/maven-public/")
+    maven("https://jitpack.io")
 }
 
 dependencies {
@@ -20,7 +21,7 @@ dependencies {
     implementation("net.kyori:adventure-text-serializer-plain:4.16.0")
     implementation("net.kyori:adventure-text-serializer-legacy:4.16.0")
     implementation("net.kyori:adventure-text-serializer-gson:4.16.0")
-    implementation("de.cubbossa:TinyTranslations-common:4.4.3")
+    implementation("de.cubbossa:TinyTranslations-common:4.5.1")
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }
 

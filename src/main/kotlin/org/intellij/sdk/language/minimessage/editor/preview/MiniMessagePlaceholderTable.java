@@ -3,6 +3,8 @@ package org.intellij.sdk.language.minimessage.editor.preview;
 import com.intellij.openapi.util.Pair;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.table.JBTable;
+import javax.swing.event.TableModelEvent;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.jetbrains.annotations.Nls;
 
 import javax.swing.*;
@@ -20,8 +22,6 @@ public class MiniMessagePlaceholderTable {
     public MiniMessagePlaceholderTable() {
 
         myModel = new PlaceholderTableModel();
-        myModel.setValueAt("placeholder", 0, 0);
-        myModel.setValueAt("<green>replacement</green>", 0, 1);
 
         myTable = new JBTable(myModel);
         myTable.setShowGrid(true);
@@ -37,35 +37,41 @@ public class MiniMessagePlaceholderTable {
                 })
                 .disableUpDownActions()
                 .createPanel();
+
     }
 
     public List<Pair<String, String>> getReplacements() {
         return myModel.values;
     }
 
+    public void setReplacements(List<Pair<String, String>> values) {
+        myModel.values = new ArrayList<>(values);
+    }
+
     public JComponent getComponent() {
         return myRootPanel;
     }
 
-    private static class PlaceholderTableModel implements TableModel {
+    public void addTableModelListener(TableModelListener listener) {
+        myModel.addTableModelListener(listener);
+    }
 
-        private final List<Pair<String, String>> values;
+    private static class PlaceholderTableModel extends AbstractTableModel implements TableModel {
 
-        public PlaceholderTableModel() {
-            values = new ArrayList<>();
-            for (int i = 0; i < 3; i++) {
-                values.add(new Pair<>("", ""));
-            }
-        }
+        private List<Pair<String, String>> values = new ArrayList<>();
+
+        public PlaceholderTableModel() {}
 
         public void insertRow(int index, String key, String value) {
             values.add(Integer.max(index, values.size()), new Pair<>(key, value));
+            fireTableRowsInserted(index, index);
         }
 
         public void deleteRow(int index) {
             if (values.size() > index) {
                 values.remove(index);
             }
+            fireTableRowsDeleted(index, index);
         }
 
         public List<Pair<String, String>> getValues() {
@@ -117,16 +123,7 @@ public class MiniMessagePlaceholderTable {
                     columnIndex == 0 ? aValue.toString() : pair.first,
                     columnIndex == 0 ? pair.second : aValue.toString()
             ));
-        }
-
-        @Override
-        public void addTableModelListener(TableModelListener l) {
-
-        }
-
-        @Override
-        public void removeTableModelListener(TableModelListener l) {
-
+            fireTableCellUpdated(rowIndex, columnIndex);
         }
     }
 }

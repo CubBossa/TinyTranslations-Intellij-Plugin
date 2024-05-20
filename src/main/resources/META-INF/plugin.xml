@@ -183,5 +183,11 @@
         <!--        />-->
         <fileEditorProvider
                 implementation="org.intellij.sdk.language.minimessage.editor.preview.MiniMessageFileEditorProvider"/>
+        <fileEditorProvider
+                implementation="org.intellij.sdk.language.nanomessage.editor.NanoMessageFileEditorProvider"/>
+        <fileEditorProvider
+                implementation="org.intellij.sdk.language.legacy.ampersand.editor.AmpersandFileEditorProvider"/>
+        <fileEditorProvider
+                implementation="org.intellij.sdk.language.legacy.common.editor.LegacyFileEditorProvider"/>
     </extensions>
 </idea-plugin>

@@ -14,7 +14,9 @@ import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.IncorrectOperationException;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.intellij.sdk.language.TinyTranslationsIcons;
+import org.intellij.sdk.language.common.editor.AdventureComponentPreviewComponent;
 import org.intellij.sdk.language.minimessage.MiniMessageLanguage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,8 +27,8 @@ public class MiniMessagePreviewIntentionAction extends QuickEditAction implement
 
     @Override
     public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
-        if (editor.getUserData(MiniMessagePreviewComponent.KEY_MM_PREVIEW_EDITOR) != null) {
-            // to disable intention inside MiniMessagePreviewComponent itself
+        if (editor.getUserData(AdventureComponentPreviewComponent.KEY_MM_PREVIEW_EDITOR) != null) {
+            // to disable intention inside AdventureComponentPreviewComponent itself
             return false;
         }
         Pair<PsiElement, TextRange> pair = getRangePair(file, editor);
@@ -54,7 +56,7 @@ public class MiniMessagePreviewIntentionAction extends QuickEditAction implement
         final Project project = file.getProject();
         final Document document = PsiDocumentManager.getInstance(project).getDocument(file);
         if (document != null) {
-            return new MiniMessagePreviewComponent(file).getComponent();
+            return new AdventureComponentPreviewComponent(MiniMessage.miniMessage(), file).getComponent();
         }
         return null;
     }

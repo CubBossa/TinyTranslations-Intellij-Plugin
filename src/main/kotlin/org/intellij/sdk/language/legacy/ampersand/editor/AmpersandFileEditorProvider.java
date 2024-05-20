@@ -1,4 +1,4 @@
-package org.intellij.sdk.language.minimessage.editor.preview;
+package org.intellij.sdk.language.legacy.ampersand.editor;
 
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorPolicy;
@@ -12,15 +12,16 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import org.intellij.sdk.language.common.editor.AdventureComponentPreviewEditor;
 import org.intellij.sdk.language.common.editor.AdventureComponentSplitViewEditor;
-import org.intellij.sdk.language.minimessage.MiniMessageFileType;
+import org.intellij.sdk.language.legacy.ampersand.AmpersandFileType;
+import org.intellij.sdk.language.nanomessage.NanoMessageFileType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-public class MiniMessageFileEditorProvider implements FileEditorProvider, DumbAware {
+public class AmpersandFileEditorProvider implements FileEditorProvider, DumbAware {
 
     @Override
     public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
-        return file.getFileType().equals(MiniMessageFileType.INSTANCE);
+        return file.getFileType().equals(AmpersandFileType.INSTANCE);
     }
 
     @Override
