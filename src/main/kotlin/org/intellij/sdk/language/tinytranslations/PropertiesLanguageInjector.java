@@ -27,27 +27,27 @@ public class PropertiesLanguageInjector implements MultiHostInjector, DumbAware 
 //		return null;
 //	}
 
-	@Override
-	public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
-		String path = context.getContainingFile().getOriginalFile().getVirtualFile().getPath();
-		if (!path.contains("/lang/")) {
-			return;
-		}
-		if (!(context instanceof PropertyImpl property)) {
-			return;
-		}
-		if (property.getValue() == null || property.getValue().isEmpty()) {
-			return;
-		}
-		int len = property.getTextLength();
-		registrar
-				.startInjecting(NanoMessageLanguage.INSTANCE)
-				.addPlace(null, null, property, TextRange.create(len - property.getValue().length(), len))
-				.doneInjecting();
-	}
+  @Override
+  public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
+    String path = context.getContainingFile().getOriginalFile().getVirtualFile().getPath();
+    if (!path.contains("/lang/")) {
+      return;
+    }
+    if (!(context instanceof PropertyImpl property)) {
+      return;
+    }
+    if (property.getValue() == null || property.getValue().isEmpty()) {
+      return;
+    }
+    int len = property.getTextLength();
+    registrar
+    .startInjecting(NanoMessageLanguage.INSTANCE)
+    .addPlace(null, null, property, TextRange.create(len - property.getValue().length(), len))
+    .doneInjecting();
+  }
 
-	@Override
-	public @NotNull List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
-		return List.of(Property.class);
-	}
+  @Override
+  public @NotNull List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
+    return List.of(Property.class);
+  }
 }

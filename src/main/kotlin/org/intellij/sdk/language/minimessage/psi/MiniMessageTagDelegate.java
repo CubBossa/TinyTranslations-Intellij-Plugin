@@ -6,11 +6,11 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class MiniMessageTagDelegate extends XmlTagDelegate {
 
-    public MiniMessageTagDelegate(@NotNull MiniMessageTag tag) {
-        super(tag);
-    }
+  public MiniMessageTagDelegate(@NotNull MiniMessageTag tag) {
+    super(tag);
+  }
 
-    public PsiElement setName(String name) {
-        return null;
-    }
+  public PsiElement setName(String name) {
+    return null;
+  }
 }

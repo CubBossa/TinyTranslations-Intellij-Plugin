@@ -9,16 +9,16 @@ import org.jetbrains.annotations.NotNull;
 @Service({Service.Level.APP, Service.Level.PROJECT})
 public final class TinyTranslationsDisposable implements Disposable {
 
-    public static @NotNull Disposable getInstance() {
-        return ApplicationManager.getApplication().getService(TinyTranslationsDisposable.class);
-    }
+  public static @NotNull Disposable getInstance() {
+    return ApplicationManager.getApplication().getService(TinyTranslationsDisposable.class);
+  }
 
-    public static @NotNull Disposable getInstance(Project project) {
-        return project.getService(TinyTranslationsDisposable.class);
-    }
+  public static @NotNull Disposable getInstance(Project project) {
+    return project.getService(TinyTranslationsDisposable.class);
+  }
 
 
-    @Override
-    public void dispose() {
-    }
+  @Override
+  public void dispose() {
+  }
 }

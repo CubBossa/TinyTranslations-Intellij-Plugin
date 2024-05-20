@@ -16,40 +16,40 @@ import org.jetbrains.annotations.NotNull;
 
 public class LegacyParserDefinition implements ParserDefinition {
 
-    public static final IFileElementType FILE = new IFileElementType(LegacyLanguage.INSTANCE);
+  public static final IFileElementType FILE = new IFileElementType(LegacyLanguage.INSTANCE);
 
-    @Override
-    public @NotNull Lexer createLexer(Project project) {
-        return new LegacyLexerAdapter(LegacyLanguage.INSTANCE);
-    }
+  @Override
+  public @NotNull Lexer createLexer(Project project) {
+    return new LegacyLexerAdapter(LegacyLanguage.INSTANCE);
+  }
 
-    @Override
-    public @NotNull PsiParser createParser(Project project) {
-        return new CustomLegacyParser();
-    }
+  @Override
+  public @NotNull PsiParser createParser(Project project) {
+    return new CustomLegacyParser();
+  }
 
-    @Override
-    public @NotNull IFileElementType getFileNodeType() {
-        return FILE;
-    }
+  @Override
+  public @NotNull IFileElementType getFileNodeType() {
+    return FILE;
+  }
 
-    @Override
-    public @NotNull TokenSet getCommentTokens() {
-        return TokenSet.EMPTY;
-    }
+  @Override
+  public @NotNull TokenSet getCommentTokens() {
+    return TokenSet.EMPTY;
+  }
 
-    @Override
-    public @NotNull TokenSet getStringLiteralElements() {
-        return TokenSet.EMPTY;
-    }
+  @Override
+  public @NotNull TokenSet getStringLiteralElements() {
+    return TokenSet.EMPTY;
+  }
 
-    @Override
-    public @NotNull PsiElement createElement(ASTNode astNode) {
-        return LegacyTypes.Factory.createElement(astNode);
-    }
+  @Override
+  public @NotNull PsiElement createElement(ASTNode astNode) {
+    return LegacyTypes.Factory.createElement(astNode);
+  }
 
-    @Override
-    public @NotNull PsiFile createFile(@NotNull FileViewProvider fileViewProvider) {
-        return new LegacyFile(fileViewProvider);
-    }
+  @Override
+  public @NotNull PsiFile createFile(@NotNull FileViewProvider fileViewProvider) {
+    return new LegacyFile(fileViewProvider);
+  }
 }

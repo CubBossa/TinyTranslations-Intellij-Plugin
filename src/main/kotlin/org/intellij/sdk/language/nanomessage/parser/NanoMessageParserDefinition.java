@@ -16,30 +16,30 @@ import org.jetbrains.annotations.NotNull;
 
 public class NanoMessageParserDefinition extends XMLParserDefinition {
 
-	public static final IFileElementType FILE = new IFileElementType(NanoMessageLanguage.INSTANCE);
+  public static final IFileElementType FILE = new IFileElementType(NanoMessageLanguage.INSTANCE);
 
-	@Override
-	public @NotNull Lexer createLexer(Project project) {
-		return new NanoMessageLexerAdapter();
-	}
+  @Override
+  public @NotNull Lexer createLexer(Project project) {
+    return new NanoMessageLexerAdapter();
+  }
 
-	@Override
-	public @NotNull PsiParser createParser(Project project) {
-		return new NanoMessageParser();
-	}
+  @Override
+  public @NotNull PsiParser createParser(Project project) {
+    return new NanoMessageParser();
+  }
 
-	@Override
-	public @NotNull IFileElementType getFileNodeType() {
-		return FILE;
-	}
+  @Override
+  public @NotNull IFileElementType getFileNodeType() {
+    return FILE;
+  }
 
-	@Override
-	public @NotNull PsiFile createFile(@NotNull FileViewProvider viewProvider) {
-		return new NanoMessageFile(viewProvider);
-	}
+  @Override
+  public @NotNull PsiFile createFile(@NotNull FileViewProvider viewProvider) {
+    return new NanoMessageFile(viewProvider);
+  }
 
-	@Override
-	public @NotNull PsiElement createElement(ASTNode node) {
-		return super.createElement(node);
-	}
+  @Override
+  public @NotNull PsiElement createElement(ASTNode node) {
+    return super.createElement(node);
+  }
 }

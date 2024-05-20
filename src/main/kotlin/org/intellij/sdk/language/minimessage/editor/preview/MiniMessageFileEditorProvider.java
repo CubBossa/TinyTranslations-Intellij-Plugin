@@ -18,25 +18,25 @@ import org.jetbrains.annotations.NotNull;
 
 public class MiniMessageFileEditorProvider implements FileEditorProvider, DumbAware {
 
-    @Override
-    public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
-        return file.getFileType().equals(MiniMessageFileType.INSTANCE);
-    }
+  @Override
+  public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
+    return file.getFileType().equals(MiniMessageFileType.INSTANCE);
+  }
 
-    @Override
-    public @NotNull FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile file) {
+  @Override
+  public @NotNull FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile file) {
 
-        PsiFile f = PsiManager.getInstance(project).findFile(file);
-        return new AdventureComponentSplitViewEditor((TextEditor) TextEditorProvider.getInstance().createEditor(project, file), new AdventureComponentPreviewEditor(project, f));
-    }
+    PsiFile f = PsiManager.getInstance(project).findFile(file);
+    return new AdventureComponentSplitViewEditor((TextEditor) TextEditorProvider.getInstance().createEditor(project, file), new AdventureComponentPreviewEditor(project, f));
+  }
 
-    @Override
-    public @NotNull @NonNls String getEditorTypeId() {
-        return "AdventureComponentSplitViewEditor";
-    }
+  @Override
+  public @NotNull @NonNls String getEditorTypeId() {
+    return "AdventureComponentSplitViewEditor";
+  }
 
-    @Override
-    public @NotNull FileEditorPolicy getPolicy() {
-        return FileEditorPolicy.HIDE_DEFAULT_EDITOR;
-    }
+  @Override
+  public @NotNull FileEditorPolicy getPolicy() {
+    return FileEditorPolicy.HIDE_DEFAULT_EDITOR;
+  }
 }

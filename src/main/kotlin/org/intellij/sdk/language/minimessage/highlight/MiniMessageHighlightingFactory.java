@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class MiniMessageHighlightingFactory extends SyntaxHighlighterFactory {
-    @Override
-    public @NotNull SyntaxHighlighter getSyntaxHighlighter(@Nullable Project project, @Nullable VirtualFile virtualFile) {
-        return new MiniMessageSyntaxHighlighting();
-    }
+  @Override
+  public @NotNull SyntaxHighlighter getSyntaxHighlighter(@Nullable Project project, @Nullable VirtualFile virtualFile) {
+    return new MiniMessageSyntaxHighlighting();
+  }
 }

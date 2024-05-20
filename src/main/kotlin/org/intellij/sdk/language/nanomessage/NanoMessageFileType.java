@@ -12,29 +12,32 @@ import javax.swing.*;
 
 public class NanoMessageFileType extends LanguageFileType {
 
-	public static final NanoMessageFileType INSTANCE = new NanoMessageFileType();
+  public static final NanoMessageFileType INSTANCE = new NanoMessageFileType();
 
-	protected NanoMessageFileType() {
-		super(NanoMessageLanguage.INSTANCE);
-	}
+  protected NanoMessageFileType() {
+    super(NanoMessageLanguage.INSTANCE);
+  }
 
-	@Override
-	public @NonNls @NotNull String getName() {
-		return "NanoMessage";
-	}
+  @Override
+  public @NonNls
+  @NotNull String getName() {
+    return "NanoMessage";
+  }
 
-	@Override
-	public @NlsContexts.Label @NotNull String getDescription() {
-		return "Minecraft NanoMessage";
-	}
+  @Override
+  public @NlsContexts.Label
+  @NotNull String getDescription() {
+    return "Minecraft NanoMessage";
+  }
 
-	@Override
-	public @NlsSafe @NotNull String getDefaultExtension() {
-		return "nm";
-	}
+  @Override
+  public @NlsSafe
+  @NotNull String getDefaultExtension() {
+    return "nm";
+  }
 
-	@Override
-	public Icon getIcon() {
-		return TinyTranslationsIcons.Logo;
-	}
+  @Override
+  public Icon getIcon() {
+    return TinyTranslationsIcons.Logo;
+  }
 }

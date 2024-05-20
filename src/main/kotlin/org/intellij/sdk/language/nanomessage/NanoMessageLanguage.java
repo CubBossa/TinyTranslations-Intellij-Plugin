@@ -11,17 +11,17 @@ import java.util.List;
 
 public class NanoMessageLanguage extends MiniMessageLanguage {
 
-	public static final NanoMessageLanguage INSTANCE = new NanoMessageLanguage();
+  public static final NanoMessageLanguage INSTANCE = new NanoMessageLanguage();
 
-	protected NanoMessageLanguage(String name) {
-		super(name);
+  protected NanoMessageLanguage(String name) {
+    super(name);
 
-		tags.addAll(List.of(
-			new BrighterTag(), new DarkerTag(), new LegacyTag(), new MessageTag(), new NbtTag(), new PreTag(), new RepeatTag()
-		));
-	}
+    tags.addAll(List.of(
+    new BrighterTag(), new DarkerTag(), new LegacyTag(), new MessageTag(), new NbtTag(), new PreTag(), new RepeatTag()
+    ));
+  }
 
-	protected NanoMessageLanguage() {
-		this("NanoMessage");
-	}
+  protected NanoMessageLanguage() {
+    this("NanoMessage");
+  }
 }

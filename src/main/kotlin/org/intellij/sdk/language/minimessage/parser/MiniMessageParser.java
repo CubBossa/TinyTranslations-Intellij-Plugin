@@ -10,18 +10,18 @@ import org.jetbrains.annotations.NotNull;
 
 public class MiniMessageParser implements PsiParser, LightPsiParser {
 
-    public MiniMessageParser() {
-    }
+  public MiniMessageParser() {
+  }
 
-    public @NotNull ASTNode parse(@NotNull IElementType root, @NotNull PsiBuilder builder) {
-        this.parseLight(root, builder);
-        return builder.getTreeBuilt();
-    }
+  public @NotNull ASTNode parse(@NotNull IElementType root, @NotNull PsiBuilder builder) {
+    this.parseLight(root, builder);
+    return builder.getTreeBuilt();
+  }
 
-    public void parseLight(IElementType root, PsiBuilder builder) {
-        builder.enforceCommentTokens(TokenSet.EMPTY);
-        PsiBuilder.Marker file = builder.mark();
-        (new MiniMessageParsing(builder)).parseDocument();
-        file.done(root);
-    }
+  public void parseLight(IElementType root, PsiBuilder builder) {
+    builder.enforceCommentTokens(TokenSet.EMPTY);
+    PsiBuilder.Marker file = builder.mark();
+    (new MiniMessageParsing(builder)).parseDocument();
+    file.done(root);
+  }
 }

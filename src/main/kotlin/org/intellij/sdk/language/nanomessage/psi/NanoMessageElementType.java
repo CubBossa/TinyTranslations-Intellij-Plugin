@@ -7,10 +7,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class NanoMessageElementType extends IElementType {
 
-	public NanoMessageElementType(@NonNls @NotNull String debugName) {
-		super(debugName, NanoMessageLanguage.INSTANCE);
-	}
+  public NanoMessageElementType(@NonNls @NotNull String debugName) {
+    super(debugName, NanoMessageLanguage.INSTANCE);
+  }
 
-	public static final IElementType NM_PLACEHOLDER = new NanoMessageElementType("NM_PLACEHOLDER");
-	public static final IElementType NM_CHOICE = new NanoMessageElementType("NM_CHOICE");
+  public static final IElementType NM_PLACEHOLDER = new NanoMessageElementType("NM_PLACEHOLDER");
+  public static final IElementType NM_CHOICE = new NanoMessageElementType("NM_CHOICE");
 }

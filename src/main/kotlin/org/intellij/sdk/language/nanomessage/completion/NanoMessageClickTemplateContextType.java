@@ -6,12 +6,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class NanoMessageClickTemplateContextType extends TemplateContextType {
 
-	NanoMessageClickTemplateContextType() {
-		super("NanoMessage");
-	}
+  NanoMessageClickTemplateContextType() {
+    super("NanoMessage");
+  }
 
-	@Override
-	public boolean isInContext(@NotNull TemplateActionContext templateActionContext) {
-		return true;
-	}
+  @Override
+  public boolean isInContext(@NotNull TemplateActionContext templateActionContext) {
+    return true;
+  }
 }

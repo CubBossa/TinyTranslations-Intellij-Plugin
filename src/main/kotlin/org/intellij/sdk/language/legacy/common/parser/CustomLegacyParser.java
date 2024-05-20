@@ -10,18 +10,18 @@ import org.jetbrains.annotations.NotNull;
 
 public class CustomLegacyParser implements PsiParser, LightPsiParser {
 
-    public CustomLegacyParser() {
-    }
+  public CustomLegacyParser() {
+  }
 
-    public @NotNull ASTNode parse(@NotNull IElementType root, @NotNull PsiBuilder builder) {
-        this.parseLight(root, builder);
-        return builder.getTreeBuilt();
-    }
+  public @NotNull ASTNode parse(@NotNull IElementType root, @NotNull PsiBuilder builder) {
+    this.parseLight(root, builder);
+    return builder.getTreeBuilt();
+  }
 
-    public void parseLight(IElementType root, PsiBuilder builder) {
-        builder.enforceCommentTokens(TokenSet.EMPTY);
-        PsiBuilder.Marker file = builder.mark();
-        (new LegacyParsing(builder)).parseDocument();
-        file.done(root);
-    }
+  public void parseLight(IElementType root, PsiBuilder builder) {
+    builder.enforceCommentTokens(TokenSet.EMPTY);
+    PsiBuilder.Marker file = builder.mark();
+    (new LegacyParsing(builder)).parseDocument();
+    file.done(root);
+  }
 }

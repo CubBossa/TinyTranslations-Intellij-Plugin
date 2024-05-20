@@ -1,33 +1,32 @@
 package org.intellij.sdk.language.legacy.common.psi;
 
 import com.intellij.psi.PsiElement;
+import java.awt.Color;
 import org.jetbrains.annotations.Nullable;
-
-import java.awt.*;
 
 public interface LegacyFormatting extends PsiElement {
 
-    enum TextDecoration {
-        ITALIC, BOLD, STRIKETHROUGH, UNDERLINED, OBFUSCATED
-    }
+  enum TextDecoration {
+    ITALIC, BOLD, STRIKETHROUGH, UNDERLINED, OBFUSCATED
+  }
 
-    boolean isTypeEquals(LegacyFormatting other);
+  boolean isTypeEquals(LegacyFormatting other);
 
-    boolean isColor();
+  boolean isColor();
 
-    boolean isHexColor();
+  boolean isHexColor();
 
-    @Nullable Color getColor();
+  @Nullable Color getColor();
 
-    void setColor(Color color);
+  void setColor(Color color);
 
-    boolean isDeco();
+  boolean isDeco();
 
-    @Nullable TextDecoration getDeco();
+  @Nullable TextDecoration getDeco();
 
-    void setDeco(TextDecoration deco);
+  void setDeco(TextDecoration deco);
 
-    boolean isReset();
+  boolean isReset();
 
-    void setReset();
+  void setReset();
 }

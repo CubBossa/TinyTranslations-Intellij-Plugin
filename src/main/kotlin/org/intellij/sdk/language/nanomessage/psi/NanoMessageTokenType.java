@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class NanoMessageTokenType extends IElementType {
 
-	public NanoMessageTokenType(@NonNls @NotNull String debugName) {
-		super(debugName, NanoMessageLanguage.INSTANCE);
-	}
+  public NanoMessageTokenType(@NonNls @NotNull String debugName) {
+    super(debugName, NanoMessageLanguage.INSTANCE);
+  }
 }

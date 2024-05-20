@@ -11,15 +11,15 @@ import com.intellij.psi.search.GlobalSearchScope;
 
 public class LocalStylesFile {
 
-    public static PropertiesFile getFile(Project project) {
-        VirtualFile file = FilenameIndex.getVirtualFilesByName("styles.properties", GlobalSearchScope.allScope(project))
-                .stream().findFirst().orElse(null);
-        if (file != null && file.getParent() != null && file.getParent().getName().equals("lang")) {
-            PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
-            if (psiFile != null && psiFile.getFileType() == PropertiesFileType.INSTANCE) {
-                return (PropertiesFile) psiFile;
-            }
-        }
-        return null;
+  public static PropertiesFile getFile(Project project) {
+    VirtualFile file = FilenameIndex.getVirtualFilesByName("styles.properties", GlobalSearchScope.allScope(project))
+    .stream().findFirst().orElse(null);
+    if (file != null && file.getParent() != null && file.getParent().getName().equals("lang")) {
+      PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
+      if (psiFile != null && psiFile.getFileType() == PropertiesFileType.INSTANCE) {
+        return (PropertiesFile) psiFile;
+      }
     }
+    return null;
+  }
 }

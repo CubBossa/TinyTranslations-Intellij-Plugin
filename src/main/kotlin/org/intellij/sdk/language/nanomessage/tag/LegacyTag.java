@@ -5,14 +5,14 @@ import org.intellij.sdk.language.minimessage.tag.MiniMessageTag;
 
 public class LegacyTag extends MiniMessageTag {
 
-    public LegacyTag() {
-        super("legacy");
+  public LegacyTag() {
+    super("legacy");
 
-        argument(new Argument("symbol") {
-            @Override
-            public boolean check(String arg) {
-                return arg.matches("([&§])");
-            }
-        }).completions("&", "§");
-    }
+    argument(new Argument("symbol") {
+      @Override
+      public boolean check(String arg) {
+        return arg.matches("([&§])");
+      }
+    }).completions("&", "§");
+  }
 }

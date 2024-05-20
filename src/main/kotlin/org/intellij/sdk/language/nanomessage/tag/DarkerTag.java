@@ -4,7 +4,7 @@ import org.intellij.sdk.language.minimessage.tag.MiniMessageTag;
 
 public class DarkerTag extends MiniMessageTag {
 
-    public DarkerTag() {
-        super("darker");
-    }
+  public DarkerTag() {
+    super("darker");
+  }
 }

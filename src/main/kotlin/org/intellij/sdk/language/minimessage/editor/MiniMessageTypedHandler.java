@@ -21,58 +21,58 @@ import org.jetbrains.annotations.NotNull;
 
 public class MiniMessageTypedHandler extends TypedHandlerDelegate {
 
-    @Override
-    public @NotNull Result beforeCharTyped(final char c, final @NotNull Project project, @NotNull Editor editor, @NotNull PsiFile editedFile, final @NotNull FileType fileType) {
-        final WebEditorOptions webEditorOptions = WebEditorOptions.getInstance();
+  @Override
+  public @NotNull Result beforeCharTyped(final char c, final @NotNull Project project, @NotNull Editor editor, @NotNull PsiFile editedFile, final @NotNull FileType fileType) {
+    final WebEditorOptions webEditorOptions = WebEditorOptions.getInstance();
 
-        if (c == ':') {
-            PsiDocumentManager.getInstance(project).commitAllDocuments();
+    if (c == ':') {
+      PsiDocumentManager.getInstance(project).commitAllDocuments();
 
-            FileViewProvider provider = editedFile.getViewProvider();
-            int offset = editor.getCaretModel().getOffset();
+      FileViewProvider provider = editedFile.getViewProvider();
+      int offset = editor.getCaretModel().getOffset();
 
-            PsiElement element = null;
-            if (offset < editor.getDocument().getTextLength()) {
-                element = provider.findElementAt(offset, MiniMessageLanguage.class);
+      PsiElement element = null;
+      if (offset < editor.getDocument().getTextLength()) {
+        element = provider.findElementAt(offset, MiniMessageLanguage.class);
 
-                if (element == null && offset > 0) {
-                    element = provider.findElementAt(offset - 1, MiniMessageLanguage.class);
-                }
-            }
-            if (element == null) {
-                return Result.CONTINUE;
-            }
-            IElementType tt = element.getNode().getElementType();
-            if (!(tt == XmlTokenType.XML_NAME || tt == XmlTokenType.XML_TAG_NAME || tt == XmlTokenType.XML_TAG_END || tt == XmlTokenType.XML_WHITE_SPACE)) {
-                return Result.CONTINUE;
-            }
-			EditorModificationUtil.insertStringAtCaret(editor, ">", true, true, 1);
-			EditorModificationUtil.insertStringAtCaret(editor, ":", true, false, 0);
-			selectRelatively(editor, -1, 0);
-			EditorModificationUtil.deleteSelectedText(editor);
-			EditorModificationUtil.moveCaretRelatively(editor, 1);
-
-            PsiDocumentManager.getInstance(project).commitAllDocuments();
-
-            ApplicationManager.getApplication().invokeLater(() -> {
-                AutoPopupController.getInstance(project).scheduleAutoPopup(editor);
-            });
-			return Result.STOP;
+        if (element == null && offset > 0) {
+          element = provider.findElementAt(offset - 1, MiniMessageLanguage.class);
         }
+      }
+      if (element == null) {
         return Result.CONTINUE;
-    }
+      }
+      IElementType tt = element.getNode().getElementType();
+      if (!(tt == XmlTokenType.XML_NAME || tt == XmlTokenType.XML_TAG_NAME || tt == XmlTokenType.XML_TAG_END || tt == XmlTokenType.XML_WHITE_SPACE)) {
+        return Result.CONTINUE;
+      }
+      EditorModificationUtil.insertStringAtCaret(editor, ">", true, true, 1);
+      EditorModificationUtil.insertStringAtCaret(editor, ":", true, false, 0);
+      selectRelatively(editor, -1, 0);
+      EditorModificationUtil.deleteSelectedText(editor);
+      EditorModificationUtil.moveCaretRelatively(editor, 1);
 
-	private void selectRelatively(Editor editor, int from, int to) {
-		editor.getCaretModel().setCaretsAndSelections(editor.getCaretModel().getCaretsAndSelections().stream()
-				.map(caretState -> {
-					if (caretState.getCaretPosition() == null) {
-						return caretState;
-					}
-					return new CaretState(caretState.getCaretPosition(),
-							new LogicalPosition(caretState.getCaretPosition().line, caretState.getCaretPosition().column + from),
-							new LogicalPosition(caretState.getCaretPosition().line, caretState.getCaretPosition().column + to)
-					);
-				})
-				.toList());
-	}
+      PsiDocumentManager.getInstance(project).commitAllDocuments();
+
+      ApplicationManager.getApplication().invokeLater(() -> {
+        AutoPopupController.getInstance(project).scheduleAutoPopup(editor);
+      });
+      return Result.STOP;
+    }
+    return Result.CONTINUE;
+  }
+
+  private void selectRelatively(Editor editor, int from, int to) {
+    editor.getCaretModel().setCaretsAndSelections(editor.getCaretModel().getCaretsAndSelections().stream()
+    .map(caretState -> {
+      if (caretState.getCaretPosition() == null) {
+        return caretState;
+      }
+      return new CaretState(caretState.getCaretPosition(),
+      new LogicalPosition(caretState.getCaretPosition().line, caretState.getCaretPosition().column + from),
+      new LogicalPosition(caretState.getCaretPosition().line, caretState.getCaretPosition().column + to)
+      );
+    })
+    .toList());
+  }
 }

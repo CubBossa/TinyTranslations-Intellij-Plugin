@@ -10,16 +10,16 @@ import org.jetbrains.annotations.NotNull;
 
 public class NanoMessageTypedHandler extends TypedHandlerDelegate {
 
-    @NotNull
-    @Override
-    public Result charTyped(char c, @NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file) {
-        if (c != '{') {
-            return Result.CONTINUE;
-        }
-        if (!file.getLanguage().equals(NanoMessageLanguage.INSTANCE)) {
-            return Result.CONTINUE;
-        }
-        EditorModificationUtil.insertStringAtCaret(editor, "}", false, 0);
-        return Result.CONTINUE;
+  @NotNull
+  @Override
+  public Result charTyped(char c, @NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file) {
+    if (c != '{') {
+      return Result.CONTINUE;
     }
+    if (!file.getLanguage().equals(NanoMessageLanguage.INSTANCE)) {
+      return Result.CONTINUE;
+    }
+    EditorModificationUtil.insertStringAtCaret(editor, "}", false, 0);
+    return Result.CONTINUE;
+  }
 }

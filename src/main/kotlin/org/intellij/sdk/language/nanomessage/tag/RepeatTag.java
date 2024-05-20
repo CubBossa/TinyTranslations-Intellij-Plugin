@@ -4,8 +4,8 @@ import org.intellij.sdk.language.minimessage.tag.MiniMessageTag;
 
 public class RepeatTag extends MiniMessageTag {
 
-    public RepeatTag() {
-        super("repeat");
-        argument(intArgument(0));
-    }
+  public RepeatTag() {
+    super("repeat");
+    argument(intArgument(0));
+  }
 }

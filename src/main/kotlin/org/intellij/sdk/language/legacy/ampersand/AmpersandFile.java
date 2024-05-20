@@ -7,12 +7,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class AmpersandFile extends PsiFileBase {
 
-	protected AmpersandFile(@NotNull FileViewProvider viewProvider) {
-		super(viewProvider, AmpersandLanguage.INSTANCE);
-	}
+  protected AmpersandFile(@NotNull FileViewProvider viewProvider) {
+    super(viewProvider, AmpersandLanguage.INSTANCE);
+  }
 
-	@Override
-	public @NotNull FileType getFileType() {
-		return AmpersandFileType.INSTANCE;
-	}
+  @Override
+  public @NotNull FileType getFileType() {
+    return AmpersandFileType.INSTANCE;
+  }
 }

@@ -17,30 +17,30 @@ import org.jetbrains.annotations.NotNull;
 
 public class MiniMessageParserDefinition extends XMLParserDefinition implements ParserDefinition {
 
-	public static final IFileElementType FILE = new IFileElementType(MiniMessageLanguage.INSTANCE);
+  public static final IFileElementType FILE = new IFileElementType(MiniMessageLanguage.INSTANCE);
 
-	@Override
-	public @NotNull Lexer createLexer(Project project) {
-		return new MiniMessageLexerAdapter();
-	}
+  @Override
+  public @NotNull Lexer createLexer(Project project) {
+    return new MiniMessageLexerAdapter();
+  }
 
-	@Override
-	public @NotNull PsiParser createParser(Project project) {
-		return new MiniMessageParser();
-	}
+  @Override
+  public @NotNull PsiParser createParser(Project project) {
+    return new MiniMessageParser();
+  }
 
-	@Override
-	public @NotNull IFileElementType getFileNodeType() {
-		return FILE;
-	}
+  @Override
+  public @NotNull IFileElementType getFileNodeType() {
+    return FILE;
+  }
 
-	@Override
-	public @NotNull PsiElement createElement(ASTNode node) {
-		return super.createElement(node);
-	}
+  @Override
+  public @NotNull PsiElement createElement(ASTNode node) {
+    return super.createElement(node);
+  }
 
-	@Override
-	public @NotNull PsiFile createFile(@NotNull FileViewProvider viewProvider) {
-		return new MiniMessageFile(viewProvider);
-	}
+  @Override
+  public @NotNull PsiFile createFile(@NotNull FileViewProvider viewProvider) {
+    return new MiniMessageFile(viewProvider);
+  }
 }

@@ -4,9 +4,9 @@ import org.intellij.sdk.language.minimessage.tag.MiniMessageTag;
 
 public class FontTag extends MiniMessageTag {
 
-    public FontTag() {
-        super("font");
+  public FontTag() {
+    super("font");
 
-        argument(keyArgument());
-    }
+    argument(keyArgument());
+  }
 }

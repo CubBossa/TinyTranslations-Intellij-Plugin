@@ -21,33 +21,33 @@ import java.util.Objects;
 
 public class LegacyInjector implements MultiHostInjector {
 
-	@Override
-	public void getLanguagesToInject(@NotNull MultiHostRegistrar multiHostRegistrar, @NotNull PsiElement context) {
-		if (!context.getContainingFile().getFileType().equals(NanoMessageFileType.INSTANCE)) {
-			return;
-		}
-		if (context instanceof XmlTag tag) {
-			if (tag.getValue().getChildren().length >= 1 && tag.getValue().getChildren()[0] instanceof PsiLanguageInjectionHost txt) {
-				Language language = switch (tag.getName()) {
-					case "legacy" -> {
-						boolean amp = tag.getAttributes().length > 0 && Objects.equals(tag.getAttributes()[0].getValue(), "&");
-						yield  amp ? AmpersandLanguage.INSTANCE : LegacyLanguage.INSTANCE;
-					}
-					case "json", "nbt", "gson" -> JsonLanguage.INSTANCE;
-					default -> null;
-				};
-				if (language != null) {
-					multiHostRegistrar
-							.startInjecting(language)
-							.addPlace(null, null, txt, TextRange.create(0, txt.getTextLength()))
-							.doneInjecting();
-				}
-			}
-		}
-	}
+  @Override
+  public void getLanguagesToInject(@NotNull MultiHostRegistrar multiHostRegistrar, @NotNull PsiElement context) {
+    if (!context.getContainingFile().getFileType().equals(NanoMessageFileType.INSTANCE)) {
+      return;
+    }
+    if (context instanceof XmlTag tag) {
+      if (tag.getValue().getChildren().length >= 1 && tag.getValue().getChildren()[0] instanceof PsiLanguageInjectionHost txt) {
+        Language language = switch (tag.getName()) {
+          case "legacy" -> {
+            boolean amp = tag.getAttributes().length > 0 && Objects.equals(tag.getAttributes()[0].getValue(), "&");
+            yield amp ? AmpersandLanguage.INSTANCE : LegacyLanguage.INSTANCE;
+          }
+          case "json", "nbt", "gson" -> JsonLanguage.INSTANCE;
+          default -> null;
+        };
+        if (language != null) {
+          multiHostRegistrar
+          .startInjecting(language)
+          .addPlace(null, null, txt, TextRange.create(0, txt.getTextLength()))
+          .doneInjecting();
+        }
+      }
+    }
+  }
 
-	@Override
-	public @NotNull List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
-		return List.of(XmlTag.class);
-	}
+  @Override
+  public @NotNull List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
+    return List.of(XmlTag.class);
+  }
 }

@@ -5,7 +5,7 @@ import org.intellij.sdk.language.minimessage.tag.MiniMessageTag;
 public class ResetTag extends MiniMessageTag {
 
 
-    public ResetTag() {
-        super("reset");
-    }
+  public ResetTag() {
+    super("reset");
+  }
 }

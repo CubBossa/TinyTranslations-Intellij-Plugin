@@ -13,31 +13,30 @@ import com.intellij.psi.PsiManager;
 import org.intellij.sdk.language.common.editor.AdventureComponentPreviewEditor;
 import org.intellij.sdk.language.common.editor.AdventureComponentSplitViewEditor;
 import org.intellij.sdk.language.legacy.ampersand.AmpersandFileType;
-import org.intellij.sdk.language.nanomessage.NanoMessageFileType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 public class AmpersandFileEditorProvider implements FileEditorProvider, DumbAware {
 
-    @Override
-    public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
-        return file.getFileType().equals(AmpersandFileType.INSTANCE);
-    }
+  @Override
+  public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
+    return file.getFileType().equals(AmpersandFileType.INSTANCE);
+  }
 
-    @Override
-    public @NotNull FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile file) {
+  @Override
+  public @NotNull FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile file) {
 
-        PsiFile f = PsiManager.getInstance(project).findFile(file);
-        return new AdventureComponentSplitViewEditor((TextEditor) TextEditorProvider.getInstance().createEditor(project, file), new AdventureComponentPreviewEditor(project, f));
-    }
+    PsiFile f = PsiManager.getInstance(project).findFile(file);
+    return new AdventureComponentSplitViewEditor((TextEditor) TextEditorProvider.getInstance().createEditor(project, file), new AdventureComponentPreviewEditor(project, f));
+  }
 
-    @Override
-    public @NotNull @NonNls String getEditorTypeId() {
-        return "AdventureComponentSplitViewEditor";
-    }
+  @Override
+  public @NotNull @NonNls String getEditorTypeId() {
+    return "AdventureComponentSplitViewEditor";
+  }
 
-    @Override
-    public @NotNull FileEditorPolicy getPolicy() {
-        return FileEditorPolicy.HIDE_DEFAULT_EDITOR;
-    }
+  @Override
+  public @NotNull FileEditorPolicy getPolicy() {
+    return FileEditorPolicy.HIDE_DEFAULT_EDITOR;
+  }
 }

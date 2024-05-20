@@ -15,10 +15,11 @@ import static org.jetbrains.yaml.YAMLElementTypes.*;
 
 public class YmlLanguageInjector implements LanguageInjectionContributor, DumbAware {
 
-  public YmlLanguageInjector() {}
+  public YmlLanguageInjector() {
+  }
 
   private static final YAMLElementType[] INJECT_TYPES = {
-          SCALAR_PLAIN_VALUE, SCALAR_TEXT_VALUE, SCALAR_QUOTED_STRING, SCALAR_LIST_VALUE
+  SCALAR_PLAIN_VALUE, SCALAR_TEXT_VALUE, SCALAR_QUOTED_STRING, SCALAR_LIST_VALUE
   };
 
   @Override

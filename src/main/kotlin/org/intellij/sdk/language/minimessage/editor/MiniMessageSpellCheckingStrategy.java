@@ -10,19 +10,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class MiniMessageSpellCheckingStrategy extends SpellcheckingStrategy {
 
+  @Override
+  public @NotNull Tokenizer<?> getTokenizer(PsiElement element) {
+    if (element instanceof XmlText) {
+      return new XmlTextTokenizer();
+    }
+    return super.getTokenizer(element);
+  }
+
+  public static class XmlTextTokenizer extends Tokenizer<XmlText> {
+
     @Override
-    public @NotNull Tokenizer<?> getTokenizer(PsiElement element) {
-        if (element instanceof XmlText) {
-            return new XmlTextTokenizer();
-        }
-        return super.getTokenizer(element);
+    public void tokenize(@NotNull XmlText xmlText, @NotNull TokenConsumer tokenConsumer) {
+      tokenConsumer.consumeToken(xmlText, false, PlainTextSplitter.getInstance());
     }
-
-    public static class XmlTextTokenizer extends Tokenizer<XmlText> {
-
-        @Override
-        public void tokenize(@NotNull XmlText xmlText, @NotNull TokenConsumer tokenConsumer) {
-            tokenConsumer.consumeToken(xmlText, false, PlainTextSplitter.getInstance());
-        }
-    }
+  }
 }
