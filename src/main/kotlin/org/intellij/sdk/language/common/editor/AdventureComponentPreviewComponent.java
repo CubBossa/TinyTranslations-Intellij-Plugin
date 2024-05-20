@@ -52,10 +52,6 @@ public class AdventureComponentPreviewComponent {
     update(miniMessageElement);
   }
 
-  public TagResolver[] getResolvers() {
-    return new TagResolver[0];
-  }
-
   public @NotNull JComponent getComponent() {
     return pane;
   }
@@ -78,12 +74,6 @@ public class AdventureComponentPreviewComponent {
       @Override
       public @NotNull Result<Component> compute() {
         String text = element.getText();
-        if (deserializer instanceof MiniMessage mm) {
-          return Result.create(mm.deserialize(text, getResolvers()), element);
-        }
-        if (deserializer instanceof NanoMessage nm) {
-          return Result.create(nm.deserialize(text, getResolvers()), element);
-        }
         return Result.create(deserializer.deserialize(text), element);
       }
     });

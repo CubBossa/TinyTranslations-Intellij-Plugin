@@ -31,6 +31,7 @@ public class JTextPanelComponentRenderer {
 
     var style = this.doc.addStyle("root", null);
     StyleConstants.setFontFamily(style, "Minecraftia");
+    StyleConstants.setFontSize(style, 14);
 
     renderInternal(component.compact(), style);
   }
@@ -65,7 +66,11 @@ public class JTextPanelComponentRenderer {
       text = tc.content();
     } else if (component instanceof TranslatableComponent tc) {
       String tr = Constants.TRANSLATION_KEY_VALUES.getProperty(tc.key());
-      text = String.format(tr, tc.arguments().stream().map(TranslationArgument::value).toArray());
+      if (tr != null) {
+        text = String.format(tr, tc.arguments().stream().map(TranslationArgument::value).toArray());
+      } else {
+        text = tc.key();
+      }
     } else if (component instanceof KeybindComponent tc) {
       String tr = Constants.CONTROL_KEY_NAMES.getProperty(tc.keybind());
       text = tr == null ? "" : tr;

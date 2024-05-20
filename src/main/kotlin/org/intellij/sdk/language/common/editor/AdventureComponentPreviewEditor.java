@@ -70,7 +70,6 @@ public class AdventureComponentPreviewEditor extends UserDataHolderBase implemen
 
     ComponentSerializer<Component, ? extends Component, String> serializer;
     if (file.getLanguage().is(NanoMessageLanguage.INSTANCE)) {
-      serializer = NanoMessage.nanoMessage();
       List<Pair<String, String>> repl = new ArrayList<>(this.myPlaceholderTable.getReplacements());
 
       try {
@@ -85,8 +84,21 @@ public class AdventureComponentPreviewEditor extends UserDataHolderBase implemen
           });
         }
         this.myPlaceholderTable.setReplacements(repl);
+        MessageTranslator finalTr = tr;
+        serializer = new ComponentSerializer<>() {
+          @Override
+          public @NotNull Component deserialize(@NotNull String input) {
+            return finalTr.translate(input);
+          }
+
+          @Override
+          public @NotNull String serialize(@NotNull Component component) {
+            return null;
+          }
+        };
       } catch (Throwable t) {
         t.printStackTrace();
+        serializer = NanoMessage.nanoMessage();
       }
     } else if (file.getLanguage().isKindOf(MiniMessageLanguage.INSTANCE)) {
       serializer = MiniMessage.builder().strict(false).build();
@@ -98,32 +110,14 @@ public class AdventureComponentPreviewEditor extends UserDataHolderBase implemen
       throw new IllegalStateException("Editor registered for unknown language " + file.getLanguage());
     }
 
-    this.myPreviewComponent = new AdventureComponentPreviewComponent((ComponentSerializer<Component, Component, String>) serializer, file) {
-      @Override
-      public TagResolver[] getResolvers() {
-        if (!replacements) {
-          return new TagResolver[0];
-        }
-        return myPlaceholderTable.getReplacements().stream()
-        .map(p -> TagResolver.resolver(p.first, (Modifying) (current, depth) -> {
-          if (depth == 0) {
-            String s = p.second.contains("<slot>") ? p.second : p.second.concat("<slot>");
-            return serializer instanceof MiniMessage
-            ? ((MiniMessage) serializer).deserialize(s, Placeholder.component("slot", current))
-            : ((NanoMessage) serializer).deserialize(s, Placeholder.component("slot", current));
-          }
-          return Component.empty();
-        }))
-        .toArray(TagResolver[]::new);
-      }
-    };
+    this.myPreviewComponent = new AdventureComponentPreviewComponent((ComponentSerializer<Component, Component, String>) serializer, file);
 
 
     myRootPanel = new JPanel(new GridLayout());
     if (replacements) {
       var split = new JBSplitter(0.7f);
       split.setOrientation(true);
-      myRootPanel.setBorder(JBUI.Borders.empty(UIUtil.DEFAULT_VGAP, UIUtil.DEFAULT_HGAP));
+      myRootPanel.setBorder(JBUI.Borders.empty(0, UIUtil.DEFAULT_HGAP));
 
       JComponent preview = new JPanel(new GridLayout());
       preview.add(myPreviewComponent.getComponent());
