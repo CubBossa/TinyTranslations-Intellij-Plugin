@@ -27,7 +27,8 @@ public class MiniMessageFileEditorProvider implements FileEditorProvider, DumbAw
   public @NotNull FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile file) {
 
     PsiFile f = PsiManager.getInstance(project).findFile(file);
-    return new AdventureComponentSplitViewEditor((TextEditor) TextEditorProvider.getInstance().createEditor(project, file), new AdventureComponentPreviewEditor(project, f));
+    return new AdventureComponentSplitViewEditor((TextEditor) TextEditorProvider.getInstance().createEditor(project, file),
+    new MiniMessagePreviewEditor(project, f));
   }
 
   @Override

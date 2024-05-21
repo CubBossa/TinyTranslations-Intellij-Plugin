@@ -24,14 +24,14 @@ public class AdventureComponentPreviewComponent {
   public static final Key<Boolean> KEY_MM_PREVIEW_EDITOR = Key.create("KEY_MM_PREVIEW_EDITOR");
   private static final Key<CachedValue<Component>> KEY_MM_PREVIEW_CACHE = Key.create("KEY_MM_PREVIEW_CACHE");
 
-  private final ComponentSerializer<Component, Component, String> deserializer;
+  private final ComponentSerializer<Component, ? extends Component, String> deserializer;
 
   private final JTextPane pane;
   private final JTextPanelComponentRenderer paneRenderer;
 
   static boolean fontRead = false;
 
-  public AdventureComponentPreviewComponent(ComponentSerializer<Component, Component, String> deserializer, PsiElement miniMessageElement) {
+  public AdventureComponentPreviewComponent(ComponentSerializer<Component, ? extends Component, String> deserializer, PsiElement miniMessageElement) {
     this.deserializer = deserializer;
 
     if (!fontRead) {

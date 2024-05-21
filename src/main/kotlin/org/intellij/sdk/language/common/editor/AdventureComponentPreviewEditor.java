@@ -7,6 +7,7 @@ import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.UserDataHolder;
 import com.intellij.openapi.util.UserDataHolderBase;
+import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiTreeChangeAdapter;
@@ -28,6 +29,7 @@ import java.util.function.Supplier;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.Modifying;
@@ -46,92 +48,21 @@ import org.jetbrains.annotations.Nullable;
 
 public class AdventureComponentPreviewEditor extends UserDataHolderBase implements UserDataHolder, FileEditor {
 
-  public static final Key<Supplier<List<Pair<String, String>>>> KEY_MM_REPLACEMENTS = Key.create("KEY_MM_REPLACEMENTS");
+  private final Project project;
+  @Getter
+  private final PsiFile myPsiFile;
+  public final JPanel myRootPanel;
+  public final AdventureComponentPreviewComponent myPreviewComponent;
+  public final ComponentSerializer<Component, ? extends Component, String> mySerializer;
 
-  private final JPanel myRootPanel;
-  private final AdventureComponentPreviewComponent myPreviewComponent;
-  private final MiniMessagePlaceholderTable myPlaceholderTable;
-
-  private static File replacementsFileGenerated = null;
-
-  public AdventureComponentPreviewEditor(Project project, PsiFile file) {
-
-    boolean replacements = file.getLanguage().isKindOf(MiniMessageLanguage.INSTANCE);
-
-    this.myPlaceholderTable = new MiniMessagePlaceholderTable();
-    if (replacements) {
-      var table = file.getUserData(KEY_MM_REPLACEMENTS);
-      if (table == null) {
-        table = ArrayList::new;
-        file.putUserData(KEY_MM_REPLACEMENTS, myPlaceholderTable::getReplacements);
-      }
-      this.myPlaceholderTable.setReplacements(table.get());
-    }
-
-    ComponentSerializer<Component, ? extends Component, String> serializer;
-    if (file.getLanguage().is(NanoMessageLanguage.INSTANCE)) {
-      List<Pair<String, String>> repl = new ArrayList<>(this.myPlaceholderTable.getReplacements());
-
-      try {
-        MessageTranslator tr = null;
-        if (replacementsFileGenerated == null) {
-          replacementsFileGenerated = Files.createTempDirectory("temp_tiny_translations").toFile();
-          tr = TinyTranslations.globalTranslator(replacementsFileGenerated);
-        }
-        if (tr != null) {
-          tr.getStyleSet().forEach((string, style) -> {
-            repl.add(new Pair<>(string, style.asString()));
-          });
-        }
-        this.myPlaceholderTable.setReplacements(repl);
-        MessageTranslator finalTr = tr;
-        serializer = new ComponentSerializer<>() {
-          @Override
-          public @NotNull Component deserialize(@NotNull String input) {
-            return finalTr.translate(input);
-          }
-
-          @Override
-          public @NotNull String serialize(@NotNull Component component) {
-            return null;
-          }
-        };
-      } catch (Throwable t) {
-        t.printStackTrace();
-        serializer = NanoMessage.nanoMessage();
-      }
-    } else if (file.getLanguage().isKindOf(MiniMessageLanguage.INSTANCE)) {
-      serializer = MiniMessage.builder().strict(false).build();
-    } else if (file.getLanguage().is(AmpersandLanguage.INSTANCE)) {
-      serializer = LegacyComponentSerializer.legacy('&');
-    } else if (file.getLanguage().isKindOf(LegacyLanguage.INSTANCE)) {
-      serializer = LegacyComponentSerializer.legacy('\u00A7');
-    } else {
-      throw new IllegalStateException("Editor registered for unknown language " + file.getLanguage());
-    }
-
-    this.myPreviewComponent = new AdventureComponentPreviewComponent((ComponentSerializer<Component, Component, String>) serializer, file);
-
+  public AdventureComponentPreviewEditor(Project project, PsiFile file, ComponentSerializer<Component, ? extends Component, String> serializer) {
+    this.myPreviewComponent = new AdventureComponentPreviewComponent(serializer, file);
+    this.mySerializer = serializer;
+    this.project = project;
+    this.myPsiFile = file;
 
     myRootPanel = new JPanel(new GridLayout());
-    if (replacements) {
-      var split = new JBSplitter(0.7f);
-      split.setOrientation(true);
-      myRootPanel.setBorder(JBUI.Borders.empty(0, UIUtil.DEFAULT_HGAP));
-
-      JComponent preview = new JPanel(new GridLayout());
-      preview.add(myPreviewComponent.getComponent());
-      JScrollPane scrollPane = new JBScrollPane(preview);
-
-      JPanel previewPanel = new JPanel();
-      previewPanel.add(scrollPane);
-
-      split.setFirstComponent(scrollPane);
-      split.setSecondComponent(myPlaceholderTable.getComponent());
-      myRootPanel.add(split);
-    } else {
-      myRootPanel.add(myPreviewComponent.getComponent());
-    }
+    addComponentsToRoot(project, file, myRootPanel);
 
     PsiTreeChangeAdapter listener = new PsiTreeChangeAdapter() {
       @Override
@@ -142,11 +73,14 @@ public class AdventureComponentPreviewEditor extends UserDataHolderBase implemen
       }
     };
     PsiManager.getInstance(project).addPsiTreeChangeListener(listener, this);
-    if (replacements) {
-      this.myPlaceholderTable.addTableModelListener(event -> {
-        this.myPreviewComponent.forceUpdate(file);
-      });
-    }
+  }
+
+  public void updateView() {
+    myPreviewComponent.forceUpdate(myPsiFile);
+  }
+
+  public void addComponentsToRoot(Project project, PsiFile psiFile, JPanel root) {
+    root.add(myPreviewComponent.getComponent());
   }
 
   @Override
