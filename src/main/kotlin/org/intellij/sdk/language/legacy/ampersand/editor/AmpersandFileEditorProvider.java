@@ -11,6 +11,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.ComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.intellij.sdk.language.common.editor.AdventureComponentPreviewEditor;
@@ -30,8 +31,14 @@ public class AmpersandFileEditorProvider implements FileEditorProvider, DumbAwar
   public @NotNull FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile file) {
 
     PsiFile f = PsiManager.getInstance(project).findFile(file);
+    var serializer = LegacyComponentSerializer.legacy('&');
     return new AdventureComponentSplitViewEditor((TextEditor) TextEditorProvider.getInstance().createEditor(project, file),
-    new AdventureComponentPreviewEditor(project, f, LegacyComponentSerializer.legacy('&')));
+        new AdventureComponentPreviewEditor(project, f) {
+          @Override
+          public Component deserialize(String s, TagResolver... resolvers) {
+            return serializer.deserialize(s);
+          }
+        });
   }
 
   @Override

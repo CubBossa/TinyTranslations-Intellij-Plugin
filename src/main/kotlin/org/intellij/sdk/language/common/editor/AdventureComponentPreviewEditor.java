@@ -46,20 +46,21 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class AdventureComponentPreviewEditor extends UserDataHolderBase implements UserDataHolder, FileEditor {
+public abstract class AdventureComponentPreviewEditor extends UserDataHolderBase implements UserDataHolder, FileEditor {
 
-  private final Project project;
-  @Getter
-  private final PsiFile myPsiFile;
+  public final PsiFile myPsiFile;
   public final JPanel myRootPanel;
   public final AdventureComponentPreviewComponent myPreviewComponent;
-  public final ComponentSerializer<Component, ? extends Component, String> mySerializer;
 
-  public AdventureComponentPreviewEditor(Project project, PsiFile file, ComponentSerializer<Component, ? extends Component, String> serializer) {
-    this.myPreviewComponent = new AdventureComponentPreviewComponent(serializer, file);
-    this.mySerializer = serializer;
-    this.project = project;
+  public AdventureComponentPreviewEditor(Project project, PsiFile file) {
+    this.myPreviewComponent = new AdventureComponentPreviewComponent() {
+      @Override
+      public Component deserialize(String s) {
+        return AdventureComponentPreviewEditor.this.deserialize(s, getReplacementResolvers());
+      }
+    };
     this.myPsiFile = file;
+    myPreviewComponent.update(myPsiFile);
 
     myRootPanel = new JPanel(new GridLayout());
     addComponentsToRoot(project, file, myRootPanel);
@@ -74,6 +75,8 @@ public class AdventureComponentPreviewEditor extends UserDataHolderBase implemen
     };
     PsiManager.getInstance(project).addPsiTreeChangeListener(listener, this);
   }
+
+  public abstract Component deserialize(String s, TagResolver... resolvers);
 
   public void updateView() {
     myPreviewComponent.forceUpdate(myPsiFile);
@@ -123,5 +126,9 @@ public class AdventureComponentPreviewEditor extends UserDataHolderBase implemen
 
   @Override
   public void dispose() {
+  }
+
+  public TagResolver getReplacementResolvers() {
+    return TagResolver.empty();
   }
 }

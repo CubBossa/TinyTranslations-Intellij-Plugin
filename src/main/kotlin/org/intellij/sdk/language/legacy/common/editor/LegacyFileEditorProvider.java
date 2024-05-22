@@ -10,6 +10,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.intellij.sdk.language.common.editor.AdventureComponentPreviewEditor;
 import org.intellij.sdk.language.common.editor.AdventureComponentSplitViewEditor;
@@ -28,8 +30,14 @@ public class LegacyFileEditorProvider implements FileEditorProvider, DumbAware {
   public @NotNull FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile file) {
 
     PsiFile f = PsiManager.getInstance(project).findFile(file);
+    var serializer = LegacyComponentSerializer.legacy('\u00A7');
     return new AdventureComponentSplitViewEditor((TextEditor) TextEditorProvider.getInstance().createEditor(project, file),
-    new AdventureComponentPreviewEditor(project, f, LegacyComponentSerializer.legacy('\u00A7')));
+        new AdventureComponentPreviewEditor(project, f) {
+          @Override
+          public Component deserialize(String s, TagResolver... resolvers) {
+            return serializer.deserialize(s);
+          }
+        });
   }
 
   @Override

@@ -97,6 +97,11 @@
             <className>org.intellij.sdk.language.minimessage.editor.preview.MiniMessagePreviewIntentionAction</className>
         </intentionAction>
 
+        <intentionAction>
+            <language>NanoMessage</language>
+            <className>org.intellij.sdk.language.nanomessage.editor.NanoMessagePreviewIntentionAction</className>
+        </intentionAction>
+
 
         <fileType
                 name="NanoMessage"

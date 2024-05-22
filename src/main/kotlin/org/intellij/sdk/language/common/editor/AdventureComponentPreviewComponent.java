@@ -19,20 +19,17 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.ComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
-public class AdventureComponentPreviewComponent {
+public abstract class AdventureComponentPreviewComponent {
 
   public static final Key<Boolean> KEY_MM_PREVIEW_EDITOR = Key.create("KEY_MM_PREVIEW_EDITOR");
   private static final Key<CachedValue<Component>> KEY_MM_PREVIEW_CACHE = Key.create("KEY_MM_PREVIEW_CACHE");
-
-  private final ComponentSerializer<Component, ? extends Component, String> deserializer;
 
   private final JTextPane pane;
   private final JTextPanelComponentRenderer paneRenderer;
 
   static boolean fontRead = false;
 
-  public AdventureComponentPreviewComponent(ComponentSerializer<Component, ? extends Component, String> deserializer, PsiElement miniMessageElement) {
-    this.deserializer = deserializer;
+  public AdventureComponentPreviewComponent() {
 
     if (!fontRead) {
       try {
@@ -48,8 +45,6 @@ public class AdventureComponentPreviewComponent {
     pane = new JTextPane();
     pane.setBackground(new Color(0x2B, 0x2B, 0x2B));
     paneRenderer = new JTextPanelComponentRenderer(pane);
-
-    update(miniMessageElement);
   }
 
   public @NotNull JComponent getComponent() {
@@ -69,12 +64,14 @@ public class AdventureComponentPreviewComponent {
     updateDom(generate(psiElement));
   }
 
+  public abstract Component deserialize(String s);
+
   private Component generate(PsiElement element) {
     return CachedValuesManager.getCachedValue(element, KEY_MM_PREVIEW_CACHE, new CachedValueProvider<>() {
       @Override
       public @NotNull Result<Component> compute() {
         String text = element.getText();
-        return Result.create(deserializer.deserialize(text), element);
+        return Result.create(deserialize(text), element);
       }
     });
   }

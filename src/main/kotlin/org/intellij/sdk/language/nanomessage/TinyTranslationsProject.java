@@ -1,8 +1,10 @@
 package org.intellij.sdk.language.nanomessage;
 
+import com.intellij.lang.injection.InjectedLanguageManager;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.AsyncFileListener;
 import com.intellij.openapi.vfs.LocalFileSystem;
@@ -24,6 +26,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.function.Supplier;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.serializer.ComponentSerializer;
 import org.intellij.lang.annotations.Language;
 import org.intellij.sdk.language.TinyTranslationsDisposable;
 import org.intellij.sdk.language.common.editor.AdventureComponentPreviewEditor;
@@ -117,5 +123,14 @@ public class TinyTranslationsProject {
     MessageTranslator translator = getTranslator(module);
     translator.addMessage(Message.builder(key).withTranslation(lang, translation).build());
     translator.saveLocale(lang);
+  }
+
+  public static MessageTranslator getTranslator(PsiFile file) {
+    PsiFile baseFile = InjectedLanguageManager.getInstance(file.getProject()).getTopLevelFile(file);
+    if (baseFile == null) {
+      return null;
+    }
+    Module module = ProjectRootManager.getInstance(baseFile.getProject()).getFileIndex().getModuleForFile(baseFile.getVirtualFile());
+    return getTranslator(module);
   }
 }
